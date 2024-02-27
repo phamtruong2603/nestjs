@@ -1,9 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+import * as process from 'process';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  const port = process.env.SERVER_PORT;
+
+  app.useGlobalPipes(new ValidationPipe());
+
+  await app.listen(port);
+
+  console.log(`Port mysql test run: ${process.env.DATABASE_PORT}`);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

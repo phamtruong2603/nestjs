@@ -42,9 +42,9 @@ export class BaseRepository<T> {
     return await this.model.populate(result, option);
   }
 
-  async deleteOne(id: string) {
-    return this.model.deleteOne({ _id: id } as FilterQuery<T>);
-  }
+  // async deleteOne(id: string) {
+  //   return this.model.deleteOne({ _id: id } as FilterQuery<T>);
+  // }
   //
   // async deleteMany(id: string[]) {
   //   return this.model.deleteMany({ _id: { $in: id } } as FilterQuery<T>);

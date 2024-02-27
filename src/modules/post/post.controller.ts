@@ -34,8 +34,8 @@ export class PostController {
     return this.postService.replacePost(id, post);
   }
 
-  @Delete(':id')
-  deletePost(@Param('id') id: string) {
-    return this.postService.deletePost(id);
-  }
+  // @Delete(':id')
+  // deletePost(@Param('id') id: string) {
+  //   return this.postService.deletePost(id);
+  // }
 }

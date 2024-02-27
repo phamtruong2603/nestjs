@@ -101,21 +101,21 @@ export class PostService {
     };
   }
 
-  async deletePost(id: string): Promise<ResponseTypeRepository<boolean>> {
-    const delatePost = await this.postRepository.deleteOne(id);
-    if (delatePost) {
-      return {
-        status: HttpStatus.CREATED,
-        code: '1000',
-        message: 'create new post successfully!!!',
-        data: true,
-      };
-    }
-    return {
-      status: HttpStatus.BAD_GATEWAY,
-      code: '1000',
-      message: 'server error',
-      data: null,
-    };
-  }
+  // async deletePost(id: string): Promise<ResponseTypeRepository<boolean>> {
+  //   const delatePost = await this.postRepository.deleteOne(id);
+  //   if (delatePost) {
+  //     return {
+  //       status: HttpStatus.CREATED,
+  //       code: '1000',
+  //       message: 'create new post successfully!!!',
+  //       data: true,
+  //     };
+  //   }
+  //   return {
+  //     status: HttpStatus.BAD_GATEWAY,
+  //     code: '1000',
+  //     message: 'server error',
+  //     data: null,
+  //   };
+  // }
 }

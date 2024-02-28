@@ -1,68 +1,31 @@
-import { FilterQuery, Model, QueryOptions } from 'mongoose';
+import { Repository, DeepPartial, FindManyOptions } from 'typeorm';
 
 export class BaseRepository<T> {
-  constructor(private readonly model: Model<T>) {}
+  constructor(private readonly repository: Repository<T>) {}
 
-  async create(doc): Promise<any> {
-    const createdEntity = new this.model(doc);
-    return await createdEntity.save();
+  async create(data: DeepPartial<T>): Promise<T> {
+    const createdEntity = this.repository.create(data);
+    return await this.repository.save(createdEntity);
   }
 
-  async findById(id: string, option?: QueryOptions): Promise<T> {
-    return this.model.findById(id, option);
+  async findOne(options: FindManyOptions<T>): Promise<T | undefined> {
+    return this.repository.findOne(options);
   }
 
-  async findByCondition(
-    filter,
-    field?: any | null,
-    option?: any | null,
-    populate?: any | null,
-  ): Promise<any> {
-    return this.model.findOne(filter, field, option).populate(populate);
-  }
-
-  async getByCondition(
-    filter,
-    field?: any | null,
-    option?: any | null,
-    populate?: any | null,
-  ): Promise<T[]> {
-    return this.model.find(filter, field, option).populate(populate);
+  async findMany(options: FindManyOptions<T>): Promise<T[]> {
+    return this.repository.find(options);
   }
 
   async findAll(): Promise<T[]> {
-    return this.model.find();
+    return this.repository.find();
   }
 
-  async aggregate(option: any) {
-    return this.model.aggregate(option);
-  }
+  // async update(updateData: DeepPartial<T>): Promise<T | undefined> {
+  //   return await this.repository.update(updateData);
+  // }
 
-  async populate(result: T[], option: any) {
-    return await this.model.populate(result, option);
+  async delete(id: string): Promise<boolean> {
+    const result = await this.repository.delete(id);
+    return result.affected !== undefined && result.affected > 0;
   }
-
-  // async deleteOne(id: string) {
-  //   return this.model.deleteOne({ _id: id } as FilterQuery<T>);
-  // }
-  //
-  // async deleteMany(id: string[]) {
-  //   return this.model.deleteMany({ _id: { $in: id } } as FilterQuery<T>);
-  // }
-  //
-  // async deleteByCondition(filter) {
-  //   return this.model.deleteMany(filter);
-  // }
-  //
-  async findByConditionAndUpdate(filter, update) {
-    return this.model.findOneAndUpdate(filter as FilterQuery<T>, update);
-  }
-  //
-  // async updateMany(filter, update, option?: any | null, callback?: any | null) {
-  //   return this.model.updateMany(filter, update, option, callback);
-  // }
-  //
-  // async findByIdAndUpdate(id, update) {
-  //   return this.model.findByIdAndUpdate(id, update);
-  // }
 }

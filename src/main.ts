@@ -5,10 +5,11 @@ import * as process from 'process';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const port = process.env.SERVER_PORT;
+  const port = process.env.SERVER_PORT || 3001;
 
   app.useGlobalPipes(new ValidationPipe());
 
+  app.enableCors();
   await app.listen(port);
 
   console.log(`Port mysql test run: ${process.env.DATABASE_PORT}`);

@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { AuthRepository } from './repository/auth.repository';
+import { AuthRepository } from './auth.repository';
 import { RegisterDto } from './dto/register.dto';
 import { ResponseTypeRepository } from '../../repository/response.type.repository';
 import { User } from './entity/user.entity';
@@ -83,6 +83,42 @@ export class AuthService {
       code: '1000',
       message: 'OK',
       data: { user: user, token },
+    };
+  }
+
+  async getAllUser(): Promise<ResponseTypeRepository<User[]>> {
+    const users = await this.authRepository.findAll({
+      relations: { connects: false },
+    });
+    return {
+      status: HttpStatus.OK,
+      code: '1000',
+      message: 'OK',
+      data: users,
+    };
+  }
+
+  async updateUser(
+    data: any,
+    user: User,
+  ): Promise<ResponseTypeRepository<User>> {
+    if (data?.id !== user.id) {
+      return {
+        status: HttpStatus.UNAUTHORIZED,
+        code: '1000',
+        message: 'UNAUTHORIZED',
+        data: null,
+      };
+    }
+    const newUser = await this.authRepository.update({
+      ...user,
+      ...data,
+    });
+    return {
+      status: HttpStatus.OK,
+      code: '1000',
+      message: 'OK',
+      data: newUser,
     };
   }
 

@@ -6,7 +6,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { AuthService } from '../modules/auth/auth.service';
-import { AuthRepository } from '../modules/auth/repository/auth.repository';
+import { AuthRepository } from '../modules/auth/auth.repository';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from './public.decorator';
 

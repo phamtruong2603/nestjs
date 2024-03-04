@@ -16,13 +16,13 @@ export class BaseRepository<T> {
     return this.repository.find(options);
   }
 
-  async findAll(): Promise<T[]> {
-    return this.repository.find();
+  async findAll(options: FindManyOptions<T>): Promise<T[]> {
+    return this.repository.find(options);
   }
 
-  // async update(updateData: DeepPartial<T>): Promise<T | undefined> {
-  //   return await this.repository.update(updateData);
-  // }
+  async update(updateData: DeepPartial<T>): Promise<T | undefined> {
+    return await this.repository.save(updateData);
+  }
 
   async delete(id: string): Promise<boolean> {
     const result = await this.repository.delete(id);

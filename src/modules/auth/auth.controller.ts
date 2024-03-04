@@ -29,4 +29,15 @@ export class AuthController {
   autoLogin(@Request() req) {
     return this.authService.autoLogin(req.user);
   }
+
+  @Public()
+  @Get('get-all-users')
+  getAllUser() {
+    return this.authService.getAllUser();
+  }
+
+  @Post('update-user')
+  updateUser(@Request() req, @Body() data: any) {
+    return this.authService.updateUser(data, req.user);
+  }
 }

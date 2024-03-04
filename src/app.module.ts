@@ -8,6 +8,8 @@ import * as process from 'process';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './modules/auth/auth.module';
 import { User } from './modules/auth/entity/user.entity';
+import { ConnectModule } from './modules/connect/connect.module';
+import { Connect } from './modules/connect/entities/connect.entity';
 
 @Module({
   imports: [
@@ -23,19 +25,13 @@ import { User } from './modules/auth/entity/user.entity';
       password: process.env.DATABASE_PASSWORD,
       port: parseInt(process.env.DATABASE_PORT, 10), // Parse port as a number
       database: process.env.DATABASE_NAME,
-      entities: [User],
+      entities: [User, Connect],
       synchronize: true,
-
-      // host: '127.0.0.1',
-      // username: 'root',
-      // password: 'root',
-      // port: 6868,
-      // database: 'test',
     }),
 
     // import module
-    // PostModule,
     AuthModule,
+    ConnectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
